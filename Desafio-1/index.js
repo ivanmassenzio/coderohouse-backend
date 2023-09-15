@@ -12,11 +12,13 @@ class ProductManager {
         // Validar que todos los campos sean obligatorios
         if( !product.title || !product.description || !product.price || !product.thumbnail || !product.code || !product.stock) {
             console.log("Todos los campos son obligatorios");
+            return;
         }
 
         // Validar que el codigo no exista
         if( this.products.some(existingProduct => existingProduct.code === product.code )) {
             console.log("El codigo ya existe");
+            return;
         }
         // agrego el id en el producto obtenido
         product.id = this.nextID++;
@@ -64,8 +66,8 @@ productManager.addProduct({
 })
 
 productManager.addProduct({
-    title: 'otro titulo',
-    description: 'descripcion de la cosa 2',
+    title: '',
+    description: '',
     price: 100,
     thumbnail: 'http://lafoto.com',
     code: 1234,
@@ -73,5 +75,11 @@ productManager.addProduct({
 })
 
 // Muestro por consola la lista de productos y uno especifico indicandole el id
+console.log('====================================');
+console.log('Obtener todos los productos');
+console.log('====================================');
 console.log(productManager.getProducts())
+console.log('====================================');
+console.log('Obtener productos por id');
+console.log('====================================');
 console.log(productManager.getProductById(1))
