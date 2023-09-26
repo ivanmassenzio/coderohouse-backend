@@ -24,3 +24,19 @@ const myMap = (array, callback) => {
     return newArray;
 }
 
+const newSetData = myMap(setData, (value) => {
+    return value ** 2;
+});
+
+console.log('====================================');
+console.log('newSetData', newSetData);
+console.log('====================================');
+
+
+Array.prototype.myMap = function(callback) {
+    const newArray = [];
+    for(let i = 0; i < this.length; i++ ) {
+        newArray.push(callback(this[i], i, this));
+    }
+    return newArray;
+}
