@@ -27,8 +27,9 @@ class ProductManager {
     
     async deleteProduct(id){
         const products = await getJSONFromFile(this.path);
-        let index = products.findIndex((p) => p.id === id)
-        if (index  > -1 ){
+        const index = products.findIndex((p) => p.id === id);
+
+        if (index !== -1 ){
             products.splice(index, 1)
             await saveJSONToFile(this.path, products);
             console.log("el producto se ha borrado correctamente")
@@ -40,11 +41,14 @@ class ProductManager {
 
     async getProdcutById(id) { 
         const products = await getJSONFromFile(this.path);
+        console.log(products[0].id)
         let productById = products.find(p => p.id === id)
+        console.log(id)
+        console.log(productById)
         if (!productById) {
             console.log("producto no encontrado")
         } else {
-            console.log("producto encontrado", productById)
+            return productById
         }
     }
     
@@ -53,10 +57,13 @@ class ProductManager {
         let ProdId = getProducts.find(p => p.id === id)
         if (!ProdId) {
             console.log(`updateProduct: producto no encontrado, ID: ${id}`)
+        } else if (products.find((p) => p.code === newCode))
+         {
+            console.log(`ya se encuetra registrado el code: ${newCode}`)
         } else { 
-                const products = { id:id, title: newTitle, description: newDescription, price: newPrice, thumbnail: newThumbnail, code: newCode, stock: newStock }
-                await saveJSONToFile(this.path, products);
-                console.log("producto actualizado correctamente", products)                      
+            const products = { id:id, title: newTitle, description: newDescription, price: newPrice, thumbnail: newThumbnail, code: newCode, stock: newStock }
+            await saveJSONToFile(this.path, products);
+            console.log("producto actualizado correctamente", products)                      
         }
     }
 }
@@ -91,19 +98,24 @@ const saveJSONToFile = async (path, data) => {
 const test = async () => {
     try {
         const productManager = new ProductManager("./products.json");
-        await productManager.addProduct({
-            title: "Coca Cola",
-            description: "Gaseosa de 3 litros",
-            price: 500,
-            thumbnail: "http://imagen-cocacola.com",
-            code: "001234",
-            stock: 50
-        });
-        const products = await productManager.getProducts();
-        console.log("getProdcuts", 'Listado de productos:', products);
-        productManager.getProdcutById(801)
-        productManager.deleteProduct(592) 
-        await productManager.updateProduct(801, "Fanta", "Gaseosa 2 litros", 500, "http://imagen-fanta.com", "0011221", 80)
+        // await productManager.addProduct({
+        //     title: "Coca Cola",
+        //     description: "Gaseosa de 3 litros",
+        //     price: 500,
+        //     thumbnail: "http://imagen-cocacola.com",
+        //     code: "001234",
+        //     stock: 50
+        // });
+        // const products = await productManager.getProducts();
+        // console.log("getProdcuts", 'Listado de productos:', products);
+        // const productById = await productManager.getProdcutById(433);
+        
+        // console.log('====================================');
+        // console.log("getProdcutById");
+        // console.log('====================================');
+        // console.log(productById );
+        productManager.deleteProduct(145) 
+        // await productManager.updateProduct(668, "Fanta", "Gaseosa 2 litros", 500, "http://imagen-fanta.com", "001234", 80)
     } catch (error) {
         console.error(' Ha ocurrido un error: ', error.message);
     }

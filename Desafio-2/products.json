@@ -7,14 +7,5 @@
 		"thumbnail": "http://imagen-cocacola.com",
 		"code": "0012234",
 		"stock": 50
-	},
-	{
-		"id": 668,
-		"title": "Coca Cola",
-		"description": "Gaseosa de 3 litros",
-		"price": 500,
-		"thumbnail": "http://imagen-cocacola.com",
-		"code": "001234",
-		"stock": 50
 	}
 ]
