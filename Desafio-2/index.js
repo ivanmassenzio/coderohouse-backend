@@ -53,17 +53,21 @@ class ProductManager {
     }
     
     async updateProduct(id, newTitle, newDescription, newPrice, newThumbnail, newCode, newStock) {
+        if (!newTitle || !newDescription || !newPrice || !newThumbnail || !newCode || !newStock) {
+            throw new Error('todos los campos son obligatorios.');
+        }
         const getProducts = await getJSONFromFile(this.path);
         let ProdId = getProducts.find(p => p.id === id)
         if (!ProdId) {
             console.log(`updateProduct: producto no encontrado, ID: ${id}`)
-        } else if (products.find((p) => p.code === newCode))
+        } else if (getProducts.find((p) => p.code === newCode))
          {
             console.log(`ya se encuetra registrado el code: ${newCode}`)
         } else { 
-            const products = { id:id, title: newTitle, description: newDescription, price: newPrice, thumbnail: newThumbnail, code: newCode, stock: newStock }
-            await saveJSONToFile(this.path, products);
-            console.log("producto actualizado correctamente", products)                      
+            const index = getProducts.indexOf(ProdId)
+            getProducts[index] = { id:id, title: newTitle, description: newDescription, price: newPrice, thumbnail: newThumbnail, code: newCode, stock: newStock }
+            await saveJSONToFile(this.path, getProducts);
+            console.log("producto actualizado correctamente", getProducts)                      
         }
     }
 }
@@ -114,8 +118,8 @@ const test = async () => {
         // console.log("getProdcutById");
         // console.log('====================================');
         // console.log(productById );
-        productManager.deleteProduct(145) 
-        // await productManager.updateProduct(668, "Fanta", "Gaseosa 2 litros", 500, "http://imagen-fanta.com", "001234", 80)
+        // await productManager.deleteProduct(145) 
+        await productManager.updateProduct(668, "7Up", "Gaseosa 2 litros", 500, "http://imagen-7UP.com", "001235", 80)
     } catch (error) {
         console.error(' Ha ocurrido un error: ', error.message);
     }

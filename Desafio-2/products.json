@@ -7,5 +7,14 @@
 		"thumbnail": "http://imagen-cocacola.com",
 		"code": "0012234",
 		"stock": 50
+	},
+	{
+		"id": 668,
+		"title": "7Up",
+		"description": "Gaseosa 2 litros",
+		"price": 500,
+		"thumbnail": "http://imagen-7UP.com",
+		"code": "001235",
+		"stock": 80
 	}
 ]
